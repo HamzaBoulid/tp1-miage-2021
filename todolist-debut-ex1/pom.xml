@@ -15,10 +15,6 @@
 	<name>todolist</name>
 	<description>TP1 miage, début ex. 1</description>
 
-	<properties>
-	  <java.version>15</java.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
