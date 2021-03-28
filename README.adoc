@@ -154,3 +154,75 @@ On teste la robustesse, la performance, la montée en charge…
 - Pour tester l'adapter REST, utiliser l'annotation `@WebMvcTest(controllers = TodoListController.class)`
 - Voir cette https://spring.io/guides/gs/testing-web/[documentation]
 =====
+
+TD Exercice 3 
+
+ Écrire le pseudo code d'injection entre les classes suivantes sachant que :
+ClientMail a besoin d'un ServerMail
+
+private ServerMail serverMail;
+@Inject
+public ClientMail(ServerMail serverMail){
+    this.serverMail = serverMail;
+}
+ClientMail a besoin d'un MessageFormatter (singleton)
+
+private MessageFormater messageFormatter;
+
+public ClientMail(MessageFormater messageFormater){
+    this.messageFormatter = messageFormater.getInstance();
+}
+
+ServerMail a besoin d’une Connexion
+private Connexion connexion;
+
+@Inject
+public ServerMail(Connexion connexion){
+    this.connexion = connexion;
+}
+
+On a donc au final: 
+// INJECTION VIA CONSTRUCTEUR
+private ServerMail serverMail;
+private MessageFormater messageFormatter;
+private Connexion connexion;
+@Inject
+public ClientMail(ServerMail serverMail,MessageFormater messageFormater, Connexion connexion){
+    this.serverMail = serverMail;
+this.messageFormatter = messageFormater.getInstance();
+this.connexion = connexion;
+
+}
+
+2- 
+L’exercice 1 est déjà écrit en java. Sauf qu’on a adopté une méthode de Constructeur. Nous allons écrire ici les deux méthodes restantes :
+
+Injection via Setter :
+
+private ServerMail serverMail;
+private MessageFormater messageFormatter;
+private Connexion connexion;
+
+@Inject
+public ClientMail(ServerMail serverMail, Connexion connexion){
+    this.serverMail = serverMail;
+    this.connexion = connexion;
+}
+@Inject
+public void setFormatter(MessageFormatter messageFormatter){
+this.messageFormatter = messageFormater;
+}
+
+Injection via Attribut : 
+
+@Inject
+ServerMail serverMail;
+@Inject
+Connection connexion;
+@Inject
+MessageFormatter messageFormater;
+
+3- 
+    Non, grâce à la notation autoWrinting de Spring, le beans sera automatiquement ajouté.
+
+
